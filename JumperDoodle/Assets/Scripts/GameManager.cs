@@ -77,6 +77,15 @@ public class GameManager : MonoBehaviour
             endMenu.SetActive(true);
             GameObject.Find("Score").GetComponent<Text>().text = "Score: " + Camera.main.transform.position.y;
         }
+
+        if (madePlayer.transform.position.x > 8.5f)
+        {
+            madePlayer.transform.position = new Vector2(-8.5f, madePlayer.transform.position.y);
+        }
+        else if (madePlayer.transform.position.x < -8.5f)
+        {
+            madePlayer.transform.position = new Vector2(8.5f, madePlayer.transform.position.y);
+        }
     }
 
     public void PlayGame()
