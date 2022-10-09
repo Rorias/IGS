@@ -15,7 +15,7 @@ public class CollisionHandler
 
     public void OnJumpDetect()
     {
-        if (player.velocity.y < 0)
+        if (player.velocity.y <= 0)
         {
             List<RaycastHit2D> hits = new List<RaycastHit2D>();
 
@@ -28,7 +28,7 @@ public class CollisionHandler
                 {
                     if (hits[i].collider.gameObject == pm.platformObjectPool[j])
                     {
-                        player.velocity = new Vector2(player.velocity.x, 0);
+                        player.velocity = new Vector2(player.velocity.x, 0.01f);
                         player.AddForce(new Vector2(0, pm.platformPool[j].Touched()));
                         Debug.Log(player.velocity.y);
                         break;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,21 +9,31 @@ public class GameManager : MonoBehaviour
 
     public GameObject prefabBasePlatform;
 
-    private GameObject madePlayer;
-
     private PlatformManager pm;
     private InputHandler ih;
     private CollisionHandler ch;
+
+    private GameObject madePlayer;
+
+    private GameObject endMenu;
+    private GameObject startMenu;
 
     private void Awake()
     {
         pm = new PlatformManager();
         ih = new InputHandler();
+
+        endMenu = GameObject.Find("EndMenu");
+        startMenu = GameObject.Find("StartMenu");
+
+        Time.timeScale = 0;
     }
 
     private void Start()
     {
-         madePlayer = null;
+        endMenu.SetActive(false);
+
+        madePlayer = null;
         Vector2 initSpawn = new Vector2(0, -5.5f);
 
         for (int i = 0; i < pm.platformCount; i++)
@@ -50,6 +61,7 @@ public class GameManager : MonoBehaviour
         ih.FixedUpdate();
         ch.OnJumpDetect();
     }
+
     private void LateUpdate()
     {
         if (madePlayer.transform.position.y > Camera.main.transform.position.y)
@@ -57,5 +69,31 @@ public class GameManager : MonoBehaviour
             Vector3 newPosition = new Vector3(Camera.main.transform.position.x, madePlayer.transform.position.y, Camera.main.transform.position.z);
             Camera.main.transform.position = newPosition;
         }
+
+        if (madePlayer.transform.position.y > Camera.main.transform.position.y)
+        {
+
+        }
     }
+
+    public void PlayGame()
+    {
+        Time.timeScale = 1;
+        startMenu.SetActive(false);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
+    }
+
 }
