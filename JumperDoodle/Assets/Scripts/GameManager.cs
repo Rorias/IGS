@@ -7,12 +7,13 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public GameObject prefabPlayer;
-
+    public GameObject prefabEnemy;
     public GameObject prefabBasePlatform;
 
     private PlatformManager pm;
     private InputHandler ih;
     private CollisionHandler ch;
+    private EnemyManager em;
 
     private GameObject madePlayer;
 
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     {
         pm = new PlatformManager();
         ih = new InputHandler();
+        em = new EnemyManager();
 
         endMenu = GameObject.Find("EndMenu");
         startMenu = GameObject.Find("StartMenu");
@@ -49,11 +51,14 @@ public class GameManager : MonoBehaviour
         }
 
         ch = new CollisionHandler(pm, madePlayer.GetComponent<Rigidbody2D>());
+
+        em.CreateEnemy(Instantiate(prefabEnemy, new Vector3(3, 3, 0), Quaternion.identity), madePlayer.transform);
     }
 
     private void Update()
     {
         ih.HandleInput();
+        em.UpdateEnemies();
     }
 
     private void FixedUpdate()
