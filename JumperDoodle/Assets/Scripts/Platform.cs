@@ -27,6 +27,7 @@ public class Platform : IPlatform
             return 0;
         }
 
+        Debug.Log("height: " + bounceHeight);
         return bounceHeight;
     }
 }

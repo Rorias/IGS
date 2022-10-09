@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     private PlatformManager pm;
     private InputHandler ih;
+    private CollisionHandler ch;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        GameObject madePlayer = null;
         Vector2 initSpawn = new Vector2(0, -5.5f);
 
         for (int i = 0; i < pm.platformCount; i++)
@@ -27,9 +29,12 @@ public class GameManager : MonoBehaviour
 
             if (i == 0)
             {
-                ih.Start(Instantiate(prefabPlayer, new Vector2(initSpawn.x, initSpawn.y + 0.5f), Quaternion.identity));
+                madePlayer = Instantiate(prefabPlayer, new Vector2(initSpawn.x, initSpawn.y + 0.75f), Quaternion.identity);
+                ih.Start(madePlayer);
             }
         }
+
+        ch = new CollisionHandler(pm, madePlayer.GetComponent<Rigidbody2D>());
     }
 
     private void Update()
@@ -41,6 +46,6 @@ public class GameManager : MonoBehaviour
     {
         pm.UpdatePlatforms();
         ih.FixedUpdate();
-
+        ch.OnJumpDetect();
     }
 }

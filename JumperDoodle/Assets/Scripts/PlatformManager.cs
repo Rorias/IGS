@@ -38,7 +38,7 @@ public class PlatformManager
 
     private Platform CreateNewMemPlatform(Vector2 _pos)
     {
-        IPlatform platform = new Platform(20, 100, _pos, Color.black);
+        IPlatform platform = new Platform(400, 100, _pos, Color.black);
         int prevRnd = -1;
 
         for (int i = 0; i < 2; i++)
@@ -50,12 +50,17 @@ public class PlatformManager
                 rnd = 0;
             }
 
+            if ((prevRnd == 2 && rnd == 3) || (prevRnd == 3 && rnd == 2))
+            {
+                rnd = 1;
+            }
+
             prevRnd = rnd;
 
             switch (rnd)
             {
                 case 1:
-                    HighBounceDec hBounce = new HighBounceDec(20, 0);
+                    HighBounceDec hBounce = new HighBounceDec(200, 0);
                     platform = hBounce.Decorate(platform);
                     platform.color += new Color(1, 1, 0, 0);
                     break;
@@ -70,7 +75,7 @@ public class PlatformManager
                     platform.color += new Color(0, 1, 0, 0);
                     break;
                 case 4:
-                    SpringDec sBounce = new SpringDec(100, 0);
+                    SpringDec sBounce = new SpringDec(800, 0);
                     platform = sBounce.Decorate(platform);
                     platform.color += new Color(0, 0, 1, 0);
                     break;
@@ -102,7 +107,7 @@ public class PlatformManager
     private void SetGamePlatformPosition(GameObject _platform, ref Vector2 _pos)
     {
         _pos.x = Mathf.Max(Mathf.Min(_pos.x + Random.Range(-6, 7), 8f), -8f);
-        _pos.y += Random.Range(1f, 3.5f);
+        _pos.y += Random.Range(1f, 3f);
         _platform.transform.position = new Vector2(_pos.x, _pos.y);
     }
 
