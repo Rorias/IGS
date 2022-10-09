@@ -86,10 +86,15 @@ public class GameManager : MonoBehaviour
 
         if (madePlayer.transform.position.y - Camera.main.transform.position.y < -5.5f)
         {
-            Time.timeScale = 0;
-            endMenu.SetActive(true);
-            GameObject.Find("Score").GetComponent<Text>().text = "Score: " + Camera.main.transform.position.y;
+            GameOver();
         }
+    }
+
+    private void GameOver()
+    {
+        Time.timeScale = 0;
+        endMenu.SetActive(true);
+        GameObject.Find("Score").GetComponent<Text>().text = "Score: " + Camera.main.transform.position.y;
     }
 
     public void PlayGame()

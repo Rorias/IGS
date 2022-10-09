@@ -23,6 +23,23 @@ public class Enemy
 
     public void UpdateEnemy()
     {
+        MoveEnemy();
+
+        //if not already following player
+        if (!following)
+        {
+            Patrol();
+        }
+    }
+
+    public void ResetEnemy(Transform _gameEnemy)
+    {
+        _gameEnemy.position = new Vector2(Random.Range(-5, 6), Camera.main.transform.position.y + 10f);
+        startPos = _gameEnemy.position;
+    }
+
+    private void MoveEnemy()
+    {
         //move to player
         if (Vector2.Distance(transform.position, playerTransform.position) < followRange)
         {
@@ -41,11 +58,11 @@ public class Enemy
                 following = false;
             }
         }
+    }
 
-        //if not already following player
-        if (!following)
-        {
-            if (transform.position.x <= startPos.x - minPos)
+    private void Patrol()
+    {
+         if (transform.position.x <= startPos.x - minPos)
             {
                 transform.position = new Vector3(Mathf.Min(transform.position.x, startPos.x - minPos), transform.position.y, 0);
                 enemySpeed = -enemySpeed;
@@ -56,15 +73,7 @@ public class Enemy
                 transform.position = new Vector3(Mathf.Max(transform.position.x, startPos.x + maxPos), transform.position.y, 0);
                 enemySpeed = -enemySpeed;
             }
-
-            //patrol select area
-            transform.position = new Vector2(transform.position.x + (enemySpeed * Time.fixedDeltaTime), transform.position.y);
-        }
-    }
-
-    public void ResetEnemy(Transform _gameEnemy)
-    {
-        _gameEnemy.position = new Vector2(Random.Range(-5, 6), Camera.main.transform.position.y + 10f);
-        startPos = _gameEnemy.position;
+        //patrol select area
+        transform.position = new Vector2(transform.position.x + (enemySpeed * Time.fixedDeltaTime), transform.position.y);
     }
 }
