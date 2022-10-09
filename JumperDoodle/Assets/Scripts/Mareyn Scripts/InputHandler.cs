@@ -21,7 +21,7 @@ public class InputHandler
 
         player = _player;
         rb = player.GetComponent<Rigidbody2D>();
-        anim = _player.GetComponent<Animator>();
+        anim = player.GetComponent<Animator>();
     }
 
 

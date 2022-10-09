@@ -12,18 +12,31 @@ public class PlatformManager
     {
         GameObject platform = _platform;
         platform.name = "BP" + _count;
-        SetPlatformPosition(platform, ref _pos);
-        Platform linkedPlatform = CreatePlatform(_pos);
-        platform.GetComponent<SpriteRenderer>().color = new Color(
-                                                        linkedPlatform.color.r > 1 ? linkedPlatform.color.r / 3 : linkedPlatform.color.r,
-                                                        linkedPlatform.color.g > 1 ? linkedPlatform.color.g / 3 : linkedPlatform.color.g,
-                                                        linkedPlatform.color.b > 1 ? linkedPlatform.color.b / 3 : linkedPlatform.color.b, 1);
-        Debug.Log(linkedPlatform.bounceHeight + ", " + linkedPlatform.jumpCount);
-        platformPool.Add(linkedPlatform);
         platformObjectPool.Add(platform);
+        CreatePlatform(platform, ref _pos, 0);
     }
 
-    private Platform CreatePlatform(Vector2 _pos)
+    private void CreatePlatform(GameObject _gamePlatform, ref Vector2 _pos, int _item)
+    {
+        SetGamePlatformPosition(_gamePlatform, ref _pos);
+        Platform platform = CreateNewMemPlatform(_pos);
+        _gamePlatform.GetComponent<SpriteRenderer>().color = new Color(
+                                                        platform.color.r > 1 ? platform.color.r / 3 : platform.color.r,
+                                                        platform.color.g > 1 ? platform.color.g / 3 : platform.color.g,
+                                                        platform.color.b > 1 ? platform.color.b / 3 : platform.color.b, 1);
+        Debug.Log(platform.bounceHeight + ", " + platform.jumpCount);
+
+        if (platformPool.Count < platformObjectPool.Count)
+        {
+            platformPool.Add(platform);
+        }
+        else
+        {
+            platformPool[_item] = platform;
+        }
+    }
+
+    private Platform CreateNewMemPlatform(Vector2 _pos)
     {
         IPlatform platform = new Platform(20, 100, _pos, Color.black);
         int prevRnd = -1;
@@ -77,30 +90,16 @@ public class PlatformManager
         {
             if (!platformObjectPool[i].activeInHierarchy)
             {
-                SetPlatformPosition(platformObjectPool[i], ref _pos);
-                Platform newPlatform = CreatePlatform(_pos);
-                platformObjectPool[i].GetComponent<SpriteRenderer>().color = new Color(
-                                                                             newPlatform.color.r > 1 ? newPlatform.color.r / 3 : newPlatform.color.r,
-                                                                             newPlatform.color.g > 1 ? newPlatform.color.g / 3 : newPlatform.color.g,
-                                                                             newPlatform.color.b > 1 ? newPlatform.color.b / 3 : newPlatform.color.b, 1);
-                Debug.Log(newPlatform.bounceHeight + ", " + newPlatform.jumpCount);
-                platformPool[i] = newPlatform;
+                CreatePlatform(platformObjectPool[i], ref _pos, i);
                 platformObjectPool[i].SetActive(true);
                 return platformObjectPool[i];
             }
         }
 
         return null;
-
-        ////if platformpool is already used up but player needs new platform anyway
-        //GameObject newPlatform = Instantiate(prefabBasePlatform);
-        //platformPool.Add(newPlatform);
-        //newPlatform.name = "BP" + platformPool.Count;
-
-        //return newPlatform;
     }
 
-    private void SetPlatformPosition(GameObject _platform, ref Vector2 _pos)
+    private void SetGamePlatformPosition(GameObject _platform, ref Vector2 _pos)
     {
         _pos.x = Mathf.Max(Mathf.Min(_pos.x + Random.Range(-6, 7), 8f), -8f);
         _pos.y += Random.Range(1f, 3.5f);
