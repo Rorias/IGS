@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputHandler
@@ -10,7 +8,7 @@ public class InputHandler
     private Rigidbody2D rb;
     private Animator anim;
 
-    Command keyLeft, keyRight;
+    private Command keyLeft, keyRight;
 
     private float moveX;
 
@@ -24,8 +22,7 @@ public class InputHandler
         anim = player.GetComponent<Animator>();
     }
 
-
-    public void FixedUpdate()
+    public void UpdatePlayerPos()
     {
         Vector2 velocity = rb.velocity;
         velocity.x = moveX;
@@ -38,14 +35,11 @@ public class InputHandler
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            //transform.rotation = Quaternion.Euler(0, 180, 0);
             keyLeft.Execute(anim);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             keyRight.Execute(anim);
-            //transform.rotation = Quaternion.Euler(0, 0, 0);
-            Debug.Log("ghello");
         }
     }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,7 +37,7 @@ public class PlatformManager
 
     private Platform CreateNewMemPlatform(Vector2 _pos)
     {
-        IPlatform platform = new Platform(400, 100, _pos, Color.black);
+        IPlatform platform = new Platform(500, 100, _pos, Color.black);
         int prevRnd = -1;
 
         for (int i = 0; i < 2; i++)
@@ -60,7 +59,7 @@ public class PlatformManager
             switch (rnd)
             {
                 case 1:
-                    HighBounceDec hBounce = new HighBounceDec(200, 0);
+                    HighBounceDec hBounce = new HighBounceDec(250, 0);
                     platform = hBounce.Decorate(platform);
                     platform.color += new Color(1, 1, 0, 0);
                     break;

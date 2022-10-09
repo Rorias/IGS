@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,11 +6,11 @@ public class EnemyManager
     private List<GameObject> gameEnemies = new List<GameObject>();
     private List<Enemy> enemies = new List<Enemy>();
 
-    public void CreateEnemy(GameObject _enemy, Transform _playerT)
+    public void CreateEnemy(GameObject _enemy, Transform _playerTransform)
     {
         GameObject enemy = _enemy;
         gameEnemies.Add(enemy);
-        enemies.Add(new Enemy(_playerT, enemy.transform));
+        enemies.Add(new Enemy(_playerTransform, enemy.transform));
     }
 
     public void UpdateEnemies()
@@ -22,8 +21,7 @@ public class EnemyManager
 
             if (gameEnemies[i].transform.position.y - Camera.main.transform.position.y < -5.5f)
             {
-                gameEnemies[i].transform.position = new Vector2(Random.Range(-5, 6), Camera.main.transform.position.y + 10f);
-                enemies[i].startPos = gameEnemies[i].transform.position;
+                enemies[i].ResetEnemy(gameEnemies[i].transform);
             }
         }
     }

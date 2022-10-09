@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -37,6 +35,7 @@ public class GameManager : MonoBehaviour
         endMenu.SetActive(false);
 
         madePlayer = null;
+
         Vector2 initSpawn = new Vector2(0, -5.5f);
 
         for (int i = 0; i < pm.platformCount; i++)
@@ -58,13 +57,22 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         ih.HandleInput();
-        em.UpdateEnemies();
+
+        if (madePlayer.transform.position.x > 8.5f)
+        {
+            madePlayer.transform.position = new Vector2(-8.5f, madePlayer.transform.position.y);
+        }
+        else if (madePlayer.transform.position.x < -8.5f)
+        {
+            madePlayer.transform.position = new Vector2(8.5f, madePlayer.transform.position.y);
+        }
     }
 
     private void FixedUpdate()
     {
         pm.UpdatePlatforms();
-        ih.FixedUpdate();
+        ih.UpdatePlayerPos();
+        em.UpdateEnemies();
         ch.OnJumpDetect();
     }
 
@@ -81,15 +89,6 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             endMenu.SetActive(true);
             GameObject.Find("Score").GetComponent<Text>().text = "Score: " + Camera.main.transform.position.y;
-        }
-
-        if (madePlayer.transform.position.x > 8.5f)
-        {
-            madePlayer.transform.position = new Vector2(-8.5f, madePlayer.transform.position.y);
-        }
-        else if (madePlayer.transform.position.x < -8.5f)
-        {
-            madePlayer.transform.position = new Vector2(8.5f, madePlayer.transform.position.y);
         }
     }
 
@@ -112,5 +111,4 @@ public class GameManager : MonoBehaviour
                 Application.Quit();
 #endif
     }
-
 }

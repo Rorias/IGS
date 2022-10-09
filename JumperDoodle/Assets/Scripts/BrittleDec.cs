@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class BrittleDec : PlatformDecorator
 {
     public BrittleDec(float _bHeight, int _jumpCount) : base(_bHeight, _jumpCount) { }
