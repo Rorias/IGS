@@ -17,7 +17,6 @@ public class Platform : IPlatform
 
     public float Touched()
     {
-        Debug.Log("This platform was jumped on");
         jumpCount--;
 
         if (jumpCount <= 0)
@@ -25,7 +24,6 @@ public class Platform : IPlatform
             return 0;
         }
 
-        Debug.Log("height: " + bounceHeight);
         return bounceHeight;
     }
 }

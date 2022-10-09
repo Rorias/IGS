@@ -59,7 +59,6 @@ public class Enemy
 
             //patrol select area
             transform.position = new Vector2(transform.position.x + (enemySpeed * Time.fixedDeltaTime), transform.position.y);
-            Debug.Log(enemySpeed * Time.fixedDeltaTime);
         }
     }
 

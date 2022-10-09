@@ -23,7 +23,6 @@ public class PlatformManager
                                                         platform.color.r > 1 ? platform.color.r / 3 : platform.color.r,
                                                         platform.color.g > 1 ? platform.color.g / 3 : platform.color.g,
                                                         platform.color.b > 1 ? platform.color.b / 3 : platform.color.b, 1);
-        Debug.Log(platform.bounceHeight + ", " + platform.jumpCount);
 
         if (platformPool.Count < platformObjectPool.Count)
         {
