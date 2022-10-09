@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyScript : MonoBehaviour
+public class EnemyScript 
 {
-    // Start is called before the first frame update
     public GameObject player;
     private Transform playerPos;
     private Vector2 currentpos;
