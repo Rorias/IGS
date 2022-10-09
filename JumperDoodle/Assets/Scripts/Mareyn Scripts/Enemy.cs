@@ -6,16 +6,20 @@ public class Enemy
 {
     private float followRange = 5;
     private float speedEnemy = 2;
-    public Vector2 currentpos;
+    public Vector2 startPos;
 
     private Transform playerT;
     private Transform transform;
+
+    private float minPos = -4;
+    private float maxPos = 4;
+
 
     public Enemy(Transform _playerTransform, Transform _transform)
     {
         playerT = _playerTransform;
         transform = _transform;
-        currentpos = transform.position;
+        startPos = transform.position;
     }
 
     public void UpdateEnemy()
@@ -28,14 +32,25 @@ public class Enemy
         else
         //patrolling
         {
-            if (Vector2.Distance(transform.position, currentpos) <= 0)
+            if (Vector2.Distance(transform.position, startPos) <= 0)
             {
+                if (transform.position.x <= startPos.x - minPos)
+                {
+                    transform.position = new Vector3(Mathf.Max(transform.position.x, startPos.x - minPos), transform.position.y, 0);
+                    speedEnemy = -speedEnemy;
+                }
 
+                if (transform.position.x >= startPos.x + maxPos)
+                {
+                    transform.position = new Vector3(Mathf.Min(transform.position.x, startPos.x + maxPos), transform.position.y, 0);
+                    speedEnemy = -speedEnemy;
+                }
+                transform.position = new Vector2(transform.position.x + (speedEnemy * Time.fixedDeltaTime), transform.position.y);
             }
             //go back to orginal pos
             else
             {
-                transform.position = Vector2.MoveTowards(transform.position, currentpos, speedEnemy * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, startPos, speedEnemy * Time.deltaTime);
             }
         }
     }

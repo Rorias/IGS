@@ -22,8 +22,8 @@ public class EnemyManager
 
             if (gameEnemies[i].transform.position.y - Camera.main.transform.position.y < -5.5f)
             {
-                gameEnemies[i].transform.position = new Vector2(Random.Range(-8, 9), Camera.main.transform.position.y + 10f);
-                enemies[i].currentpos = gameEnemies[i].transform.position;
+                gameEnemies[i].transform.position = new Vector2(Random.Range(-5, 6), Camera.main.transform.position.y + 10f);
+                enemies[i].startPos = gameEnemies[i].transform.position;
             }
         }
     }
