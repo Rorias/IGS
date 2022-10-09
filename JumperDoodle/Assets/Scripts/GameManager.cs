@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -70,9 +71,11 @@ public class GameManager : MonoBehaviour
             Camera.main.transform.position = newPosition;
         }
 
-        if (madePlayer.transform.position.y > Camera.main.transform.position.y)
+        if (madePlayer.transform.position.y - Camera.main.transform.position.y < -5.5f)
         {
-
+            Time.timeScale = 0;
+            endMenu.SetActive(true);
+            GameObject.Find("Score").GetComponent<Text>().text = "Score: " + Camera.main.transform.position.y;
         }
     }
 
