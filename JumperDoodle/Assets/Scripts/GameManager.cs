@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject prefabBasePlatform;
 
+    private GameObject madePlayer;
+
     private PlatformManager pm;
     private InputHandler ih;
     private CollisionHandler ch;
@@ -20,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        GameObject madePlayer = null;
+         madePlayer = null;
         Vector2 initSpawn = new Vector2(0, -5.5f);
 
         for (int i = 0; i < pm.platformCount; i++)
@@ -47,5 +49,13 @@ public class GameManager : MonoBehaviour
         pm.UpdatePlatforms();
         ih.FixedUpdate();
         ch.OnJumpDetect();
+    }
+    private void LateUpdate()
+    {
+        if (madePlayer.transform.position.y > Camera.main.transform.position.y)
+        {
+            Vector3 newPosition = new Vector3(Camera.main.transform.position.x, madePlayer.transform.position.y, Camera.main.transform.position.z);
+            Camera.main.transform.position = newPosition;
+        }
     }
 }
