@@ -21,7 +21,7 @@ public class Enemy
         startPos = transform.position;
     }
 
-    public void UpdateEnemy()
+    public bool UpdateEnemy()
     {
         MoveEnemy();
 
@@ -30,6 +30,8 @@ public class Enemy
         {
             Patrol();
         }
+
+        return HitPlayer();
     }
 
     public void ResetEnemy(Transform _gameEnemy)
@@ -62,18 +64,29 @@ public class Enemy
 
     private void Patrol()
     {
-         if (transform.position.x <= startPos.x - minPos)
-            {
-                transform.position = new Vector3(Mathf.Min(transform.position.x, startPos.x - minPos), transform.position.y, 0);
-                enemySpeed = -enemySpeed;
-            }
+        //Keep enemy in bounds of playfield
+        if (transform.position.x <= startPos.x - minPos)
+        {
+            transform.position = new Vector3(Mathf.Min(transform.position.x, startPos.x - minPos), transform.position.y, 0);
+            enemySpeed = -enemySpeed;
+        }
 
-            if (transform.position.x >= startPos.x + maxPos)
-            {
-                transform.position = new Vector3(Mathf.Max(transform.position.x, startPos.x + maxPos), transform.position.y, 0);
-                enemySpeed = -enemySpeed;
-            }
+        if (transform.position.x >= startPos.x + maxPos)
+        {
+            transform.position = new Vector3(Mathf.Max(transform.position.x, startPos.x + maxPos), transform.position.y, 0);
+            enemySpeed = -enemySpeed;
+        }
         //patrol select area
         transform.position = new Vector2(transform.position.x + (enemySpeed * Time.fixedDeltaTime), transform.position.y);
+    }
+
+    private bool HitPlayer()
+    {
+        if (Vector2.Distance(transform.position, playerTransform.position) <= 0.5f)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

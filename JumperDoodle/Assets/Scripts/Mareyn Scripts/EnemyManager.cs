@@ -13,16 +13,20 @@ public class EnemyManager
         enemies.Add(new Enemy(_playerTransform, enemy.transform));
     }
 
-    public void UpdateEnemies()
+    public bool UpdateEnemies()
     {
+        bool hit = false;
+
         for (int i = 0; i < enemies.Count; i++)
         {
-            enemies[i].UpdateEnemy();
+            hit |= enemies[i].UpdateEnemy();
 
             if (gameEnemies[i].transform.position.y - Camera.main.transform.position.y < -5.5f)
             {
                 enemies[i].ResetEnemy(gameEnemies[i].transform);
             }
         }
+
+        return hit;
     }
 }

@@ -72,8 +72,11 @@ public class GameManager : MonoBehaviour
     {
         pm.UpdatePlatforms();
         ih.UpdatePlayerPos();
-        em.UpdateEnemies();
         ch.OnJumpDetect();
+        if (em.UpdateEnemies())
+        {
+            GameOver();
+        }
     }
 
     private void LateUpdate()
