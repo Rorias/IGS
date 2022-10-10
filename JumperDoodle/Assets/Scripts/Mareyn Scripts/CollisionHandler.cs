@@ -29,7 +29,6 @@ public class CollisionHandler
                     {
                         player.velocity = new Vector2(player.velocity.x, 0.01f);
                         player.AddForce(new Vector2(0, pm.platformPool[j].Touched()));
-                        Debug.Log(player.velocity.y);
                         break;
                     }
                 }
