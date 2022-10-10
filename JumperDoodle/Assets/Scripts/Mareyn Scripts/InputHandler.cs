@@ -33,11 +33,11 @@ public class InputHandler
     {
         moveX = Input.GetAxis("Horizontal") * moveSpeed;
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             keyLeft.Execute(anim);
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             keyRight.Execute(anim);
         }
