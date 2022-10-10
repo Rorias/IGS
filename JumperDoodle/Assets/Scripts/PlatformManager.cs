@@ -37,47 +37,51 @@ public class PlatformManager
     private Platform CreateNewMemPlatform(Vector2 _pos)
     {
         IPlatform platform = new Platform(500, 100, _pos, Color.black);
-        int prevRnd = -1;
 
         for (int i = 0; i < 2; i++)
         {
-            int rnd = Random.Range(0, 5);
+            int rnd = Random.Range(0, 9);
 
-            if (rnd == prevRnd)
+            if ((platform.platformTypes == IPlatform.PlatformType.broken && rnd == 6) ||
+                (platform.platformTypes == IPlatform.PlatformType.brittle && (rnd == 4 || rnd == 5)) ||
+                (platform.platformTypes == IPlatform.PlatformType.highBounce && (rnd == 2 || rnd == 3)) ||
+                (platform.platformTypes == IPlatform.PlatformType.spring && (rnd == 7 || rnd == 8)))
             {
                 rnd = 0;
             }
 
-            if ((prevRnd == 2 && rnd == 3) || (prevRnd == 3 && rnd == 2))
+            if ((platform.platformTypes == IPlatform.PlatformType.broken || platform.platformTypes == IPlatform.PlatformType.brittle) && rnd >= 4 && rnd <= 6)
             {
-                rnd = 1;
+                rnd = 2;
             }
-
-            prevRnd = rnd;
 
             switch (rnd)
             {
-                case 1:
+                case 2:
+                case 3:
                     HighBounceDec hBounce = new HighBounceDec(250, 0);
                     platform = hBounce.Decorate(platform);
                     platform.color += new Color(1, 1, 0, 0);
                     break;
-                case 2:
+                case 4:
+                case 5:
                     BrittleDec bDec = new BrittleDec(0, 2);
                     platform = bDec.Decorate(platform);
                     platform.color += new Color(1, 0, 0, 0);
                     break;
-                case 3:
+                case 6:
                     BrokenDec brDec = new BrokenDec(0, 1);
                     platform = brDec.Decorate(platform);
                     platform.color += new Color(0, 1, 0, 0);
                     break;
-                case 4:
+                case 7:
+                case 8:
                     SpringDec sBounce = new SpringDec(800, 0);
                     platform = sBounce.Decorate(platform);
                     platform.color += new Color(0, 0, 1, 0);
                     break;
                 case 0:
+                case 1:
                 default:
                     platform.color += new Color(0, 0, 0, 0);
                     break;

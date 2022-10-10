@@ -5,6 +5,7 @@ public class BrokenDec : PlatformDecorator
     public override IPlatform Decorate(IPlatform _platform)
     {
         _platform.jumpCount = jumpCountMod;
+        _platform.platformTypes |= IPlatform.PlatformType.broken;
         return _platform;
     }
 }

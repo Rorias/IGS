@@ -4,6 +4,7 @@ public class MovingDec : PlatformDecorator
 
     public override IPlatform Decorate(IPlatform _platform)
     {
-        throw new System.NotImplementedException();
+        _platform.platformTypes |= IPlatform.PlatformType.moving;
+        return _platform;
     }
 }

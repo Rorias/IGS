@@ -5,6 +5,7 @@ public class HighBounceDec : PlatformDecorator
     public override IPlatform Decorate(IPlatform _platform)
     {
         _platform.bounceHeight += bounceHeightMod;
+        _platform.platformTypes |= IPlatform.PlatformType.highBounce;
         return _platform;
     }
 }
