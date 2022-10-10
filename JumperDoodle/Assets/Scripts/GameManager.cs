@@ -93,13 +93,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void GameOver()
-    {
-        Time.timeScale = 0;
-        endMenu.SetActive(true);
-        GameObject.Find("Score").GetComponent<Text>().text = "Score: " + Camera.main.transform.position.y;
-    }
-
     public void PlayGame()
     {
         Time.timeScale = 1;
@@ -118,5 +111,12 @@ public class GameManager : MonoBehaviour
 #else
                 Application.Quit();
 #endif
+    }
+
+    private void GameOver()
+    {
+        Time.timeScale = 0;
+        endMenu.SetActive(true);
+        GameObject.Find("Score").GetComponent<Text>().text = "Score: " + Camera.main.transform.position.y;
     }
 }

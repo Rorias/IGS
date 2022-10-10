@@ -15,6 +15,39 @@ public class PlatformManager
         CreatePlatform(platform, ref _pos, 0);
     }
 
+    public GameObject RequestPlatform(Vector2 _pos)
+    {
+        for (int i = 0; i < platformObjectPool.Count; i++)
+        {
+            if (!platformObjectPool[i].activeInHierarchy)
+            {
+                CreatePlatform(platformObjectPool[i], ref _pos, i);
+                platformObjectPool[i].SetActive(true);
+                return platformObjectPool[i];
+            }
+        }
+
+        return null;
+    }
+
+    public void UpdatePlatforms()
+    {
+        for (int i = 0; i < platformObjectPool.Count; i++)
+        {
+            if (platformObjectPool[i].transform.position.y - Camera.main.transform.position.y < -5.5f)
+            {
+                ReplacePlatform(i);
+                break;
+            }
+
+            if (platformPool[i].jumpCount <= 0)
+            {
+                ReplacePlatform(i);
+                break;
+            }
+        }
+    }
+
     private void CreatePlatform(GameObject _gamePlatform, ref Vector2 _pos, int _item)
     {
         SetGamePlatformPosition(_gamePlatform, ref _pos);
@@ -91,44 +124,11 @@ public class PlatformManager
         return (Platform)platform;
     }
 
-    public GameObject RequestPlatform(Vector2 _pos)
-    {
-        for (int i = 0; i < platformObjectPool.Count; i++)
-        {
-            if (!platformObjectPool[i].activeInHierarchy)
-            {
-                CreatePlatform(platformObjectPool[i], ref _pos, i);
-                platformObjectPool[i].SetActive(true);
-                return platformObjectPool[i];
-            }
-        }
-
-        return null;
-    }
-
     private void SetGamePlatformPosition(GameObject _platform, ref Vector2 _pos)
     {
         _pos.x = Mathf.Max(Mathf.Min(_pos.x + Random.Range(-6, 7), 8f), -8f);
         _pos.y += Random.Range(1f, 3f);
         _platform.transform.position = new Vector2(_pos.x, _pos.y);
-    }
-
-    public void UpdatePlatforms()
-    {
-        for (int i = 0; i < platformObjectPool.Count; i++)
-        {
-            if (platformObjectPool[i].transform.position.y - Camera.main.transform.position.y < -5.5f)
-            {
-                ReplacePlatform(i);
-                break;
-            }
-
-            if (platformPool[i].jumpCount <= 0)
-            {
-                ReplacePlatform(i);
-                break;
-            }
-        }
     }
 
     private void ReplacePlatform(int _item)
