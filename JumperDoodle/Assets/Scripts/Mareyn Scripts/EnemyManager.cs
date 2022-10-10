@@ -15,11 +15,11 @@ public class EnemyManager
 
     public bool UpdateEnemies()
     {
-        bool hit = false;
+        bool isHit = false;
 
         for (int i = 0; i < enemies.Count; i++)
         {
-            hit |= enemies[i].UpdateEnemy();
+            isHit |= enemies[i].UpdateEnemy();
 
             if (gameEnemies[i].transform.position.y - Camera.main.transform.position.y < -5.5f)
             {
@@ -27,6 +27,6 @@ public class EnemyManager
             }
         }
 
-        return hit;
+        return isHit;
     }
 }

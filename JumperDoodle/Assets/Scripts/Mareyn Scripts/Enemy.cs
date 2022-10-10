@@ -12,7 +12,7 @@ public class Enemy
     private float minPos = 4;
     private float maxPos = 4;
 
-    private bool following = false;
+    private bool isFollowing = false;
 
     public Enemy(Transform _playerTransform, Transform _transform)
     {
@@ -26,7 +26,7 @@ public class Enemy
         MoveEnemy();
 
         //if not already following player
-        if (!following)
+        if (!isFollowing)
         {
             Patrol();
         }
@@ -47,17 +47,17 @@ public class Enemy
         {
             transform.position = Vector2.MoveTowards(transform.position, playerTransform.position, enemySpeed * Time.fixedDeltaTime);
             enemySpeed = 2;
-            following = true;
+            isFollowing = true;
         }
         //move back to spawn
-        else if (following)
+        else if (isFollowing)
         {
             transform.position = Vector2.MoveTowards(transform.position, startPos, enemySpeed * Time.fixedDeltaTime);
 
             if (Vector2.Distance(transform.position, startPos) <= 0)
             {
                 enemySpeed = 3;
-                following = false;
+                isFollowing = false;
             }
         }
     }
